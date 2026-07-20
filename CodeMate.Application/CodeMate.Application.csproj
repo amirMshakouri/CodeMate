@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Auth\Interfaces\" />
+    <Folder Include="Auth\Mappings\" />
+    <Folder Include="Auth\Validators\" />
+    <Folder Include="Auth\Services\" />
     <Folder Include="Common\Interfaces\" />
     <Folder Include="Projects\Mappings\" />
     <Folder Include="Projects\Validators\" />

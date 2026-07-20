@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <Folder Include="Auth\Responses\" />
+    <Folder Include="JoinRequests\Response\" />
+    <Folder Include="JoinRequests\Request\" />
   </ItemGroup>
 
 </Project>

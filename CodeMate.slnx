@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/docs/" />
+  <Folder Name="/src/">
+    <Project Path="CodeMate.API/CodeMate.API.csproj" Id="0b91b11f-b04f-4522-8ebb-d218955da384" />
+    <Project Path="CodeMate.Application/CodeMate.Application.csproj" Id="91040907-96f9-4612-9e86-5779d82cb2d1" />
+    <Project Path="CodeMate.Contracts/CodeMate.Contracts.csproj" Id="a51757ef-f2ab-4a8a-bf1f-defa5614dbd9" />
+    <Project Path="CodeMate.Domain/CodeMate.Domain.csproj" Id="c59ae690-bd5b-410b-975d-67f4d8579467" />
+    <Project Path="CodeMate.Infrastructure/CodeMate.Infrastructure.csproj" Id="9daee941-43c9-4fe1-b076-134f3f81df35" />
+    <Project Path="CodeMate.Shared/CodeMate.Shared.csproj" Id="dce79c0d-a04e-4b62-9e7e-f7374f32ce41" />
+  </Folder>
+  <Folder Name="/tests/" />
+</Solution>

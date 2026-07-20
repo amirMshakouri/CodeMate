@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeMate.Application\CodeMate.Application.csproj" />
+    <ProjectReference Include="..\CodeMate.Contracts\CodeMate.Contracts.csproj" />
+    <ProjectReference Include="..\CodeMate.Infrastructure\CodeMate.Infrastructure.csproj" />
+    <ProjectReference Include="..\CodeMate.Shared\CodeMate.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -7,26 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Auth\**" />
+    <Compile Remove="Projects\**" />
+    <Compile Remove="Tasks\**" />
+    <Compile Remove="Users\**" />
+    <EmbeddedResource Remove="Auth\**" />
+    <EmbeddedResource Remove="Projects\**" />
+    <EmbeddedResource Remove="Tasks\**" />
+    <EmbeddedResource Remove="Users\**" />
+    <None Remove="Auth\**" />
+    <None Remove="Projects\**" />
+    <None Remove="Tasks\**" />
+    <None Remove="Users\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CodeMate.Contracts\CodeMate.Contracts.csproj" />
     <ProjectReference Include="..\CodeMate.Domain\CodeMate.Domain.csproj" />
     <ProjectReference Include="..\CodeMate.Shared\CodeMate.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Auth\Interfaces\" />
-    <Folder Include="Auth\Mappings\" />
-    <Folder Include="Auth\Validators\" />
-    <Folder Include="Auth\Services\" />
     <Folder Include="Common\Interfaces\" />
-    <Folder Include="Projects\Mappings\" />
-    <Folder Include="Projects\Validators\" />
-    <Folder Include="Projects\Services\" />
-    <Folder Include="Tasks\Mappings\" />
-    <Folder Include="Tasks\Validators\" />
-    <Folder Include="Tasks\Services\" />
-    <Folder Include="Users\Mappings\" />
-    <Folder Include="Users\Validators\" />
-    <Folder Include="Users\Services\" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CodeMate.Application.Services
+namespace CodeMate.Application.Common.Interfaces.Services
 {
     internal class IAuthService
     {

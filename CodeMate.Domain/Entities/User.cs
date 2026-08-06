@@ -16,6 +16,7 @@ namespace CodeMate.Domain.Entities
         public string? Bio { get; set; }
 
         public UserRole Role { get; set; } = UserRole.User;
+        public bool IsActive { get; set; } = true;
 
     }
 }

@@ -1,66 +1,67 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using CodeMate.Contracts.Auth.Responses;
+
 using CodeMate.Application.Common.Interfaces.Security;
 using CodeMate.Domain.Entities;
+
 using Microsoft.IdentityModel.Tokens;
 
+namespace CodeMate.Infrastructure.Authentication.Jwt;
 
-namespace CodeMate.Infrastructure.Authentication.Jwt
+public sealed class JwtService : IJwtService
 {
-    public class JwtService : IJwtService
+    private readonly JwtSettings _settings;
+
+    public JwtService(JwtSettings settings)
     {
-        private readonly JwtSettings _settings;
+        _settings = settings;
+    }
 
-        public JwtService(JwtSettings settings)
+    public JwtTokenResult GenerateToken(User user)
+    {
+        var expiration = DateTimeOffset.UtcNow.AddMinutes(
+            _settings.ExpirationMinutes);
+
+        var claims = new[]
         {
-            _settings = settings;
-        }
+            new Claim(
+                ClaimTypes.NameIdentifier,
+                user.Id.ToString()),
 
+            new Claim(
+                ClaimTypes.Name,
+                user.UserName),
 
-        public string GenerateToken(User user)
+            new Claim(
+                ClaimTypes.Email,
+                user.Email),
+
+            new Claim(
+                ClaimTypes.Role,
+                user.Role.ToString())
+        };
+
+        var key = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(_settings.Key));
+
+        var credentials = new SigningCredentials(
+            key,
+            SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken(
+            issuer: _settings.Issuer,
+            audience: _settings.Audience,
+            claims: claims,
+            expires: expiration.UtcDateTime,
+            signingCredentials: credentials
+        );
+
+        return new JwtTokenResult
         {
-            var claims = new[]
-            {
-                new Claim(
-                    JwtRegisteredClaimNames.Sub,
-                    user.Id.ToString()),
-
-                new Claim(
-                    JwtRegisteredClaimNames.UniqueName,
-                    user.UserName),
-
-                new Claim(
-                    JwtRegisteredClaimNames.Email,
-                    user.Email),
-
-                new Claim(
-                    ClaimTypes.Role,
-                    user.Role.ToString())
-            };
-
-
-            var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_settings.Key));
-
-
-            var credentials = new SigningCredentials(
-                key,
-                SecurityAlgorithms.HmacSha256);
-
-
-            var token = new JwtSecurityToken(
-                issuer: _settings.Issuer,
-                audience: _settings.Audience,
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(
-                    _settings.ExpirationMinutes),
-                signingCredentials: credentials
-            );
-
-
-            return new JwtSecurityTokenHandler()
-                .WriteToken(token);
-        }
+            Token = new JwtSecurityTokenHandler().WriteToken(token),
+            Expiration = expiration
+        };
     }
 }

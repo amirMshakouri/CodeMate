@@ -13,15 +13,18 @@ public sealed class AuthService : IAuthService
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly IJwtService _jwtService;
 
     public AuthService(
-    IUserRepository userRepository,
-    IMapper mapper,
-    IPasswordHasher passwordHasher)
+        IUserRepository userRepository,
+        IMapper mapper,
+        IPasswordHasher passwordHasher,
+        IJwtService jwtService)
     {
         _userRepository = userRepository;
         _mapper = mapper;
         _passwordHasher = passwordHasher;
+        _jwtService = jwtService;
     }
 
     public async Task<RegisterResponse> RegisterAsync(RegisterRequest request)
@@ -38,16 +41,12 @@ public sealed class AuthService : IAuthService
 
         var user = _mapper.Map<User>(request);
 
+        // Hash password
+        user.PasswordHash = _passwordHasher.Hash(request.Password);
 
-        // در Phase 4 رمز عبور هش خواهد شد.
-        user.PasswordHash = _passwordHasher.HashPassword(request.Password);
-
-        // ذخیره کاربر
         await _userRepository.AddAsync(user);
 
-        // تبدیل Entity به Response
         var response = _mapper.Map<RegisterResponse>(user);
-
         response.Message = "User registered successfully.";
 
         return response;
@@ -62,27 +61,18 @@ public sealed class AuthService : IAuthService
             throw new InvalidOperationException("Invalid username or password.");
         }
 
-        // Phase 4
-        // بررسی رمز عبور
-        if (!_passwordHasher.VerifyPassword(request.Password, user.PasswordHash))
-        {    // TODO: Replace with UnauthorizedException after custom exceptions are implemented.
-
+        if (!_passwordHasher.Verify(request.Password, user.PasswordHash))
+        {
             throw new InvalidOperationException("Invalid username or password.");
         }
 
-        // Phase 4
-        // تولید JWT
-        // var token = _jwtService.GenerateToken(user);
+        var jwt = _jwtService.GenerateToken(user);
 
         return new LoginResponse
         {
             UserName = user.UserName,
-
-            Token = string.Empty,
-
-            Expiration = DateTimeOffset.MinValue
+            Token = jwt.Token,
+            Expiration = jwt.Expiration
         };
     }
-
-
 }

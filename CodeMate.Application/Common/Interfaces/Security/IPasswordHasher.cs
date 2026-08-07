@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace CodeMate.Application.Common.Interfaces.Security;
 
-namespace CodeMate.Application.Common.Interfaces.Security
+public interface IPasswordHasher
 {
-    public interface IPasswordHasher
-    {
-        string Hash(string password);
+    string HashPassword(string password);
 
-        bool Verify(string password, string passwordHash);
-    }
+    bool VerifyPassword(string password, string passwordHash);
 }

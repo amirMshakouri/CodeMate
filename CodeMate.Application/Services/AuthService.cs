@@ -37,10 +37,10 @@ public sealed class AuthService : IAuthService
         }
 
         var user = _mapper.Map<User>(request);
-        
+
 
         // در Phase 4 رمز عبور هش خواهد شد.
-        user.PasswordHash = _passwordHasher.Hash(request.Password);
+        user.PasswordHash = _passwordHasher.HashPassword(request.Password);
 
         // ذخیره کاربر
         await _userRepository.AddAsync(user);
@@ -64,9 +64,10 @@ public sealed class AuthService : IAuthService
 
         // Phase 4
         // بررسی رمز عبور
-        if (!_passwordHasher.Verify(request.Password, user.PasswordHash))
-        {
-             throw new InvalidOperationException("Invalid username or password.");
+        if (!_passwordHasher.VerifyPassword(request.Password, user.PasswordHash))
+        {    // TODO: Replace with UnauthorizedException after custom exceptions are implemented.
+
+            throw new InvalidOperationException("Invalid username or password.");
         }
 
         // Phase 4

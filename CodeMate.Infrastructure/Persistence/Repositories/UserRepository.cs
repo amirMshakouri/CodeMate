@@ -17,24 +17,28 @@ namespace CodeMate.Infrastructure.Persistence.Repositories
         public async Task<User?> GetByIdAsync(Guid id)
         {
             return await _context.Users
+                        .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<User?> GetByUserNameAsync(string userName)
         {
             return await _context.Users
+                        .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.UserName == userName);
         }
 
         public async Task<User?> GetByEmailAsync(string email)
         {
             return await _context.Users
+                .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Email == email);
         }
 
         public async Task<User?> GetByUserNameOrEmailAsync(string userNameOrEmail)
         {
             return await _context.Users
+                .AsNoTracking()
                 .FirstOrDefaultAsync(x =>
                     x.UserName == userNameOrEmail ||
                     x.Email == userNameOrEmail);
@@ -57,9 +61,11 @@ namespace CodeMate.Infrastructure.Persistence.Repositories
             await _context.Users.AddAsync(user);
         }
 
-        public async Task UpdateAsync(User user)
+        public Task UpdateAsync(User user)
         {
             _context.Users.Update(user);
+
+            return Task.CompletedTask;
         }
     }
 }

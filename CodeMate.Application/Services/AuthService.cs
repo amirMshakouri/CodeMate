@@ -66,13 +66,13 @@ public sealed class AuthService : IAuthService
             throw new InvalidOperationException("Invalid username or password.");
         }
 
-        var token = _jwtService.GenerateToken(user);
+        var jwt = _jwtService.GenerateToken(user);
 
         return new LoginResponse
         {
             UserName = user.UserName,
-            Token = token,
-            Expiration = DateTimeOffset.UtcNow.AddMinutes(60)
+            Token = jwt.Token,
+            Expiration = jwt.Expiration
         };
     }
 }

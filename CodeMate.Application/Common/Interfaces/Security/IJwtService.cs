@@ -1,9 +1,9 @@
-﻿using CodeMate.Domain.Entities;
+﻿using CodeMate.Contracts.Auth.Responses;
+using CodeMate.Domain.Entities;
 
-namespace CodeMate.Application.Common.Interfaces.Security
+namespace CodeMate.Application.Common.Interfaces.Security;
+
+public interface IJwtService
 {
-    public interface IJwtService
-    {
-        string GenerateToken(User user);
-    }
+    JwtTokenResult GenerateToken(User user);
 }

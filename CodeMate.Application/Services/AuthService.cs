@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CodeMate.Application.Common.Interfaces.Repositories;
+using CodeMate.Application.Common.Interfaces.Security;
 using CodeMate.Application.Common.Interfaces.Services;
 using CodeMate.Contracts.Auth.Requests;
 using CodeMate.Contracts.Auth.Responses;
@@ -11,13 +12,16 @@ public sealed class AuthService : IAuthService
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
+    private readonly IPasswordHasher _passwordHasher;
 
     public AuthService(
-        IUserRepository userRepository,
-        IMapper mapper)
+    IUserRepository userRepository,
+    IMapper mapper,
+    IPasswordHasher passwordHasher)
     {
         _userRepository = userRepository;
         _mapper = mapper;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<RegisterResponse> RegisterAsync(RegisterRequest request)
@@ -33,9 +37,10 @@ public sealed class AuthService : IAuthService
         }
 
         var user = _mapper.Map<User>(request);
+        
 
         // در Phase 4 رمز عبور هش خواهد شد.
-        // user.PasswordHash = _passwordHasher.Hash(request.Password);
+        user.PasswordHash = _passwordHasher.Hash(request.Password);
 
         // ذخیره کاربر
         await _userRepository.AddAsync(user);
@@ -59,10 +64,10 @@ public sealed class AuthService : IAuthService
 
         // Phase 4
         // بررسی رمز عبور
-        // if (!_passwordHasher.Verify(request.Password, user.PasswordHash))
-        // {
-        //     throw new UnauthorizedException("Invalid username or password.");
-        // }
+        if (!_passwordHasher.Verify(request.Password, user.PasswordHash))
+        {
+             throw new InvalidOperationException("Invalid username or password.");
+        }
 
         // Phase 4
         // تولید JWT

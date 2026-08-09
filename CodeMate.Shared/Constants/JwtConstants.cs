@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace CodeMate.Shared.Constants;
 
-namespace CodeMate.Shared.Constants
+public static class JwtConstants
 {
-    internal class JwtConstants
-    {
-    }
+    public const string SectionName = "Jwt";
 }

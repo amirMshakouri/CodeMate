@@ -24,15 +24,15 @@ namespace CodeMate.Infrastructure.Persistence.Configurations
                 .IsRequired()
                 .HasMaxLength(255);
 
-            builder.Property(x => x.SecondaryPassword)
-                .IsRequired()
-                .HasMaxLength(255);
+            //builder.Property(x => x.SecondaryPassword)
+            //    .IsRequired()
+            //    .HasMaxLength(255);
 
             builder.Property(x => x.FullName)
                 .HasMaxLength(100);
 
             builder.Property(x => x.PhoneNumber)
-                .HasMaxLength(11);
+                .HasMaxLength(20);
 
             builder.Property(x => x.Bio)
                 .HasMaxLength(255);

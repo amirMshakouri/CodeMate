@@ -10,8 +10,8 @@ public sealed class AuthMappingProfile : Profile
     public AuthMappingProfile()
     {
         CreateMap<RegisterRequest, User>()
-            .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
-            .ForMember(dest => dest.SecondaryPassword, opt => opt.Ignore());
+            .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+            //.ForMember(dest => dest.SecondaryPassword, opt => opt.Ignore());
 
         CreateMap<User, RegisterResponse>();
 

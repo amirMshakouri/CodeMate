@@ -22,5 +22,7 @@ namespace CodeMate.Application.Common.Interfaces.Repositories
         Task AddAsync(User user);
 
         Task UpdateAsync(User user);
+
+        Task SaveChangesAsync();
     }
 }

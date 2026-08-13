@@ -67,5 +67,9 @@ namespace CodeMate.Infrastructure.Persistence.Repositories
 
             return Task.CompletedTask;
         }
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

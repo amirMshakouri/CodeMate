@@ -4,7 +4,8 @@ using System.Text;
 
 namespace CodeMate.Shared.Exceptions
 {
-    internal class NotFoundException
+    public sealed class NotFoundException : AppException
     {
+        public NotFoundException(string message) : base(message, 404) { }
     }
 }

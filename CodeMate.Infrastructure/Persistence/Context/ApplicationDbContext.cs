@@ -9,6 +9,12 @@ namespace CodeMate.Infrastructure.Persistence.Context
     public class ApplicationDbContext : DbContext
     {
         public DbSet<User> Users { get; set; } = null!;
+        //public DbSet<Project> Projects { get; set; } = null!;
+        //public DbSet<ProjectMember> ProjectMembers { get; set; } = null!;
+        //public DbSet<Skill> Skills { get; set; } = null!;
+        //public DbSet<TaskItem> Tasks { get; set; } = null!;
+        //public DbSet<JoinRequest> JoinRequests { get; set; } = null!;
+        //public DbSet<UserSkill> UserSkills { get; set; } = null!;
 
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options)

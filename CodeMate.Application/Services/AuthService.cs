@@ -5,6 +5,7 @@ using CodeMate.Application.Common.Interfaces.Services;
 using CodeMate.Contracts.Auth.Requests;
 using CodeMate.Contracts.Auth.Responses;
 using CodeMate.Domain.Entities;
+using CodeMate.Shared.Exceptions;
 
 namespace CodeMate.Application.Services;
 
@@ -31,24 +32,28 @@ public sealed class AuthService : IAuthService
     {
         if (await _userRepository.ExistsByUserNameAsync(request.UserName))
         {
-            throw new InvalidOperationException("Username already exists.");
+            throw new ValidationException(new Dictionary<string, string[]>
+            {
+                ["UserName"] = new[] { "Username already exists." }
+            });
         }
 
         if (await _userRepository.ExistsByEmailAsync(request.Email))
         {
-            throw new InvalidOperationException("Email already exists.");
+            throw new ValidationException(new Dictionary<string, string[]>
+            {
+                ["Email"] = new[] { "Email already exists." }
+            });
         }
 
         var user = _mapper.Map<User>(request);
-
-        // Hash password
         user.PasswordHash = _passwordHasher.Hash(request.Password);
 
         await _userRepository.AddAsync(user);
+        await _userRepository.SaveChangesAsync(); 
 
         var response = _mapper.Map<RegisterResponse>(user);
         response.Message = "User registered successfully.";
-
         return response;
     }
 
@@ -56,18 +61,13 @@ public sealed class AuthService : IAuthService
     {
         var user = await _userRepository.GetByUserNameOrEmailAsync(request.UserNameOrEmail);
 
-        if (user is null)
+       
+        if (user is null || !_passwordHasher.Verify(request.Password, user.PasswordHash))
         {
-            throw new InvalidOperationException("Invalid username or password.");
-        }
-
-        if (!_passwordHasher.Verify(request.Password, user.PasswordHash))
-        {
-            throw new InvalidOperationException("Invalid username or password.");
+            throw new UnauthorizedException("Invalid username or password.");
         }
 
         var jwt = _jwtService.GenerateToken(user);
-
         return new LoginResponse
         {
             UserName = user.UserName,

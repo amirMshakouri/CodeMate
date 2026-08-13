@@ -4,7 +4,10 @@ using System.Text;
 
 namespace CodeMate.Shared.Exceptions
 {
-    internal class UnauthorizedException
+    public sealed class UnauthorizedException : AppException
     {
+        public UnauthorizedException(string message) : base(message, 401) { }
     }
+
+    
 }

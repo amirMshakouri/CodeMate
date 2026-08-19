@@ -76,4 +76,10 @@ public sealed class UserSkillService : IUserSkillService
         await _skillRepository.RemoveUserSkillAsync(userId, skillId);
         await _skillRepository.SaveChangesAsync();
     }
+    public async Task<IEnumerable<SkillResponse>> SearchSkillsAsync(string? term)
+    {
+        var skills = await _skillRepository.SearchAsync(term);
+
+        return _mapper.Map<IEnumerable<SkillResponse>>(skills);
+    }
 }

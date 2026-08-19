@@ -5,6 +5,8 @@ namespace CodeMate.Application.Common.Interfaces.Services
 {
     public interface IUserSkillService
     {
+        Task<IEnumerable<SkillResponse>> SearchSkillsAsync(string? term);
+
         Task<IEnumerable<SkillResponse>> GetMySkillsAsync(Guid userId);
 
         Task<SkillResponse> AddSkillAsync(

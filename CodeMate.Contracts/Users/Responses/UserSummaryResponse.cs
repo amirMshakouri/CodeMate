@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CodeMate.Contracts.Users.Responses
+﻿namespace CodeMate.Contracts.Users.Responses
 {
-    internal class UserSummaryResponse
+    public class UserSummaryResponse
     {
+        public Guid Id { get; set; }
+        public string UserName { get; set; } = string.Empty;
+        public string? FullName { get; set; }
     }
 }

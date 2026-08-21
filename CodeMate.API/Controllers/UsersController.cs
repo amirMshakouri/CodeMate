@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CodeMate.Application.Common.Interfaces.Services;
+using CodeMate.Contracts.Users.Requests;
+using CodeMate.Contracts.Users.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -9,15 +12,42 @@ namespace CodeMate.API.Controllers
     [Authorize]
     public class UsersController : ControllerBase
     {
-        [HttpGet("me")]
-        public IActionResult GetCurrentUser()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userName = User.FindFirstValue(ClaimTypes.Name);
-            var email = User.FindFirstValue(ClaimTypes.Email);
-            var role = User.FindFirstValue(ClaimTypes.Role);
+        private readonly IUserService _userService;
 
-            return Ok(new { userId, userName, email, role });
+        public UsersController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
+        [HttpGet("me")]
+        public async Task<ActionResult<UserProfileResponse>> GetCurrentUser()
+        {
+            var userIdValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!Guid.TryParse(userIdValue, out var userId))
+            {
+                return Unauthorized();
+            }
+
+            var profile = await _userService.GetProfileAsync(userId);
+
+            return Ok(profile);
+        }
+        
+        [HttpPut("me")]
+        public async Task<IActionResult> UpdateProfile(
+            [FromBody] UpdateProfileRequest request)
+        {
+            var userIdValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!Guid.TryParse(userIdValue, out var userId))
+            {
+                return Unauthorized();
+            }
+
+            await _userService.UpdateProfileAsync(userId, request);
+
+            return NoContent();
         }
     }
 }

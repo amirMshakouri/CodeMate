@@ -15,6 +15,8 @@ public static class DependencyInjection
         services.AddAutoMapper(cfg => { }, assembly);
         services.AddValidatorsFromAssembly(assembly);
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserSkillService, UserSkillService>();
 
         return services;
     }

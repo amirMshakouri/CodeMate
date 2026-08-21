@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CodeMate.Contracts.Users.Enums;
 
 namespace CodeMate.Contracts.Users.Responses
 {
@@ -12,6 +13,7 @@ namespace CodeMate.Contracts.Users.Responses
         public string? FullName { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Bio { get; set; }
+        public UserRoleResponse Role { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
     }
 }

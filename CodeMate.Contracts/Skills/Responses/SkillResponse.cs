@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CodeMate.Contracts.Skills.Responses
+﻿namespace CodeMate.Contracts.Skills.Responses
 {
-    internal class SkillResponse
+    public sealed class SkillResponse
     {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; } = string.Empty;
     }
 }

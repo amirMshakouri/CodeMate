@@ -4,7 +4,14 @@ using System.Text;
 
 namespace CodeMate.Contracts.Users.Responses
 {
-    internal class UserProfileResponse
+    public class UserProfileResponse
     {
+        public Guid Id { get; set; }
+        public string UserName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string? FullName { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? Bio { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
     }
 }

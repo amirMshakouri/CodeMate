@@ -23,6 +23,7 @@ public static class DependencyInjection
                 configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddScoped<ISkillRepository, SkillRepository>();
 
         services.Configure<JwtSettings>(

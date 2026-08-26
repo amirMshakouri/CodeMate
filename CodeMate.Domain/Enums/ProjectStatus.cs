@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CodeMate.Domain.Enums
+﻿namespace CodeMate.Domain.Enums
 {
     public enum ProjectStatus
     {
+        Draft = 1
     }
 }

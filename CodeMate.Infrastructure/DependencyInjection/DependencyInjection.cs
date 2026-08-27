@@ -1,10 +1,15 @@
 ﻿using CodeMate.Application.Common.Interfaces.Repositories;
 using CodeMate.Application.Common.Interfaces.Security;
+using CodeMate.Application.Common.Interfaces.Services;
+
+using CodeMate.Infrastructure.Authentication.CurrentUser;
 using CodeMate.Infrastructure.Authentication.Jwt;
 using CodeMate.Infrastructure.Authentication.Password;
 using CodeMate.Infrastructure.Persistence.Context;
 using CodeMate.Infrastructure.Persistence.Repositories;
+
 using CodeMate.Shared.Constants;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +39,9 @@ public static class DependencyInjection
 
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IJwtService, JwtService>();
+        services.AddHttpContextAccessor();
 
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
         return services;
     }
 }

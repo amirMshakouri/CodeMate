@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CodeMate.Contracts.Common.Pagination;
+using CodeMate.Contracts.Projects.Enums;
 
-namespace CodeMate.Contracts.Projects.Requests
+namespace CodeMate.Contracts.Projects.Requests;
+
+public class SearchProjectRequest : PaginationRequest
 {
-    internal class SearchProjectRequest
-    {
-    }
+    public string? Title { get; set; }
+    public ProjectStatusResponse? Status { get; set; }
 }

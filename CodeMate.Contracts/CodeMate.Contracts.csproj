@@ -1,14 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="JoinRequests\Response\" />
-    <Folder Include="JoinRequests\Request\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="JoinRequests\Response\" />
+		<Folder Include="JoinRequests\Request\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\CodeMate.Domain\CodeMate.Domain.csproj" />
+	</ItemGroup>
 
 </Project>

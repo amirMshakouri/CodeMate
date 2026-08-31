@@ -8,10 +8,13 @@ namespace CodeMate.API.Controllers;
 public partial class ProjectsController : ControllerBase
 {
     private readonly IProjectCommandService _projectCommandService;
+    private readonly IProjectQueryService _projectQueryService;
 
     public ProjectsController(
-        IProjectCommandService projectCommandService)
+        IProjectCommandService projectCommandService,
+        IProjectQueryService projectQueryService)
     {
         _projectCommandService = projectCommandService;
+        _projectQueryService = projectQueryService;
     }
 }

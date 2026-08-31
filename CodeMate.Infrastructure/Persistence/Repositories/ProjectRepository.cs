@@ -18,6 +18,6 @@ public partial class ProjectRepository : IProjectRepository
     {
         return await _context.Projects
             .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
     }
 }

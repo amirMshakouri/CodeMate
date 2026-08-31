@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CodeMate.Contracts.Projects.Enums;
 
-namespace CodeMate.Contracts.Projects.Responses
+namespace CodeMate.Contracts.Projects.Responses;
+
+public class ProjectCardResponse
 {
-    internal class ProjectCardResponse
-    {
-    }
+    public Guid Id { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public ProjectStatusResponse Status { get; set; }
 }

@@ -8,18 +8,10 @@ namespace CodeMate.API.Controllers;
 
 public partial class ProjectsController
 {
-    private readonly IProjectQueryService _projectQueryService;
-
-    public ProjectsController(IProjectQueryService projectQueryService)
-    {
-        _projectQueryService = projectQueryService;
-    }
-
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<ProjectDetailsResponse>> GetById(Guid id)
     {
         var result = await _projectQueryService.GetByIdAsync(id);
-
         return Ok(result);
     }
 
@@ -28,7 +20,6 @@ public partial class ProjectsController
         [FromQuery] SearchProjectRequest request)
     {
         var result = await _projectQueryService.SearchAsync(request);
-
         return Ok(result);
     }
 }

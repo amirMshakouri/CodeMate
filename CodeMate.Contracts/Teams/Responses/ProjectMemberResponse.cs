@@ -1,10 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CodeMate.Contracts.Teams.Enums;
 
-namespace CodeMate.Contracts.Teams.Responses
+namespace CodeMate.Contracts.Teams.Responses;
+
+public sealed class ProjectMemberResponse
 {
-    internal class ProjectMemberResponse
-    {
-    }
+    public Guid TeamId { get; set; }
+
+    public Guid UserId { get; set; }
+
+    public TeamMemberRoleResponse Role { get; set; }
+
+    public DateTimeOffset JoinedAt { get; set; }
+
+    public bool IsActive { get; set; }
 }

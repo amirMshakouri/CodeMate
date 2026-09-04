@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace CodeMate.Contracts.Projects.Requests;
 
-namespace CodeMate.Contracts.Projects.Requests
+public sealed class CreateProjectRequest
 {
-    internal class CreateProjectRequest
-    {
-    }
+    public string Title { get; set; } = string.Empty;
+
+    public string? Description { get; set; }
 }

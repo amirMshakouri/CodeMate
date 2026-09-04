@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace CodeMate.Contracts.Common.Pagination;
 
-namespace CodeMate.Contracts.Common.Pagination
+public class PaginationRequest
 {
-    internal class PaginationRequest
-    {
-    }
+    public int PageNumber { get; set; } = 1;
+
+    public int PageSize { get; set; } = 10;
 }

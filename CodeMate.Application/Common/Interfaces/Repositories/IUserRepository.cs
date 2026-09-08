@@ -15,6 +15,8 @@ namespace CodeMate.Application.Common.Interfaces.Repositories
 
         Task<User?> GetByUserNameOrEmailAsync(string userNameOrEmail);
 
+        Task<User?> GetByPasswordResetTokenAsync(string token);
+
         Task<bool> ExistsByUserNameAsync(string userName);
 
         Task<bool> ExistsByEmailAsync(string email);

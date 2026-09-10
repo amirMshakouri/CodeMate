@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace CodeMate.Domain.Enums;
 
-namespace CodeMate.Domain.Enums
+public enum JoinRequestStatus
 {
-    public enum JoinRequestStatus
-    {
-    }
+    Pending = 1,
+    Accepted = 2,
+    Rejected = 3
 }

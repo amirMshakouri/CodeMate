@@ -15,7 +15,12 @@ namespace CodeMate.Infrastructure.Persistence.Context
         //public DbSet<TaskItem> Tasks { get; set; } = null!;
         //public DbSet<JoinRequest> JoinRequests { get; set; } = null!;
         public DbSet<UserSkill> UserSkills { get; set; } = null!;
-
+        
+        public DbSet<Team> Teams { get; set; } = null!;
+        public DbSet<TeamMember> TeamMembers { get; set; } = null!;
+        public DbSet<JoinRequest> JoinRequests { get; set; } = null!;
+        public DbSet<ProjectSkill> ProjectSkills { get; set; } = null!;
+        
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options)
             : base(options)

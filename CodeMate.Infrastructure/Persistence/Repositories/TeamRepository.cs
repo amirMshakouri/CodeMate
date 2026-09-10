@@ -20,4 +20,26 @@ public partial class TeamRepository : ITeamRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
     }
+    
+    public async Task AddAsync(Team team)
+    {
+        await _context.Teams.AddAsync(team);
+    }
+
+    public Task UpdateAsync(Team team)
+    {
+        _context.Teams.Update(team);
+        return Task.CompletedTask;
+    }
+
+    public Task DeleteAsync(Team team)
+    {
+        _context.Teams.Update(team);
+        return Task.CompletedTask;
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _context.SaveChangesAsync();
+    }
 }

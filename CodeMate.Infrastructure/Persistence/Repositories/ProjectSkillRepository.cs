@@ -20,4 +20,28 @@ public partial class ProjectSkillRepository : IProjectSkillRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
     }
+
+    public async Task<IEnumerable<ProjectSkill>> GetByProjectIdAsync(Guid projectId)
+    {
+        return await _context.ProjectSkills
+            .AsNoTracking()
+            .Where(x => x.ProjectId == projectId && !x.IsDeleted)
+            .ToListAsync();
+    }
+    
+    public async Task AddAsync(ProjectSkill projectSkill)
+    {
+        await _context.ProjectSkills.AddAsync(projectSkill);
+    }
+
+    public Task DeleteAsync(ProjectSkill projectSkill)
+    {
+        _context.ProjectSkills.Update(projectSkill);
+        return Task.CompletedTask;
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _context.SaveChangesAsync();
+    }
 }

@@ -20,4 +20,20 @@ public partial class JoinRequestRepository : IJoinRequestRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
     }
+
+    public async Task AddAsync(JoinRequest joinRequest)
+    {
+        await _context.JoinRequests.AddAsync(joinRequest);
+    }
+
+    public Task UpdateAsync(JoinRequest joinRequest)
+    {
+        _context.JoinRequests.Update(joinRequest);
+        return Task.CompletedTask;
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _context.SaveChangesAsync();
+    }
 }

@@ -20,7 +20,37 @@ public partial class TeamRepository : ITeamRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
     }
-    
+
+    public async Task<bool> IsMemberAsync(Guid teamId, Guid userId)
+    {
+        return await _context.TeamMembers
+            .AnyAsync(x =>
+                x.TeamId == teamId &&
+                x.UserId == userId &&
+                x.IsActive &&
+                !x.IsDeleted);
+    }
+
+    public async Task<TeamMember?> GetMemberAsync(Guid teamId, Guid userId)
+    {
+        return await _context.TeamMembers
+            .FirstOrDefaultAsync(x =>
+                x.TeamId == teamId &&
+                x.UserId == userId &&
+                !x.IsDeleted);
+    }
+
+    public async Task AddMemberAsync(TeamMember teamMember)
+    {
+        await _context.TeamMembers.AddAsync(teamMember);
+    }
+
+    public Task UpdateMemberAsync(TeamMember teamMember)
+    {
+        _context.TeamMembers.Update(teamMember);
+        return Task.CompletedTask;
+    }
+
     public async Task AddAsync(Team team)
     {
         await _context.Teams.AddAsync(team);

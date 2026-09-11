@@ -10,13 +10,19 @@ public partial class TeamsController : ControllerBase
 {
     private readonly ITeamCommandService _teamCommandService;
     private readonly IJoinRequestCommandService _joinRequestCommandService;
-    
+    private readonly ITeamQueryService _teamQueryService;
+    private readonly IJoinRequestQueryService _joinRequestQueryService;
+
     public TeamsController(
         ITeamCommandService teamCommandService,
-        IJoinRequestCommandService joinRequestCommandService)
+        IJoinRequestCommandService joinRequestCommandService,
+        ITeamQueryService teamQueryService,
+        IJoinRequestQueryService joinRequestQueryService)
     {
         _teamCommandService = teamCommandService;
         _joinRequestCommandService = joinRequestCommandService;
+        _teamQueryService = teamQueryService;
+        _joinRequestQueryService = joinRequestQueryService;
     }
 
     [HttpPost]
@@ -33,6 +39,7 @@ public partial class TeamsController : ControllerBase
         UpdateTeamRequest request)
     {
         var result = await _teamCommandService.UpdateAsync(request.Id, request);
+
         return Ok(result);
     }
 
@@ -43,7 +50,7 @@ public partial class TeamsController : ControllerBase
 
         return NoContent();
     }
-    
+
     [HttpPost("{id:guid}/join-requests")]
     public async Task<IActionResult> SendJoinRequest(
         Guid id,
@@ -55,7 +62,7 @@ public partial class TeamsController : ControllerBase
 
         return Ok();
     }
-    
+
     [HttpPatch("{id:guid}/join-requests/{requestId:guid}/accept")]
     public async Task<IActionResult> AcceptJoinRequest(
         Guid id,
@@ -69,7 +76,7 @@ public partial class TeamsController : ControllerBase
 
         return NoContent();
     }
-    
+
     [HttpPatch("{id:guid}/join-requests/{requestId:guid}/reject")]
     public async Task<IActionResult> RejectJoinRequest(
         Guid id,
@@ -83,7 +90,7 @@ public partial class TeamsController : ControllerBase
 
         return NoContent();
     }
-    
+
     [HttpDelete("{id:guid}/members/{userId:guid}")]
     public async Task<IActionResult> RemoveMember(
         Guid id,

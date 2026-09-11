@@ -4,7 +4,8 @@ using System.Text;
 
 namespace CodeMate.Application.Common.Interfaces.Services
 {
-    internal class IProjectService
+    public interface IEmailService
     {
+        Task SendPasswordResetEmailAsync(string toEmail, string resetToken, DateTimeOffset expiresAt);
     }
 }

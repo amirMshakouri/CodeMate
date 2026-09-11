@@ -42,6 +42,7 @@ public static class DependencyInjection
         services.AddHttpContextAccessor();
 
         services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddScoped<IEmailService, CodeMate.Infrastructure.Services.EmailService>();
         return services;
     }
 }

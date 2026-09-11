@@ -11,5 +11,13 @@ namespace CodeMate.Application.Common.Interfaces.Services
         Task<RegisterResponse> RegisterAsync(RegisterRequest request);
 
         Task<LoginResponse> LoginAsync(LoginRequest request);
+
+        Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordRequest request);
+
+        Task<ResetPasswordResponse> ResetPasswordAsync(ResetPasswordRequest request);
+
+        Task<ChangePasswordResponse> ChangePasswordAsync(Guid userId, ChangePasswordRequest request);
+
+        Task LogoutAsync();
     }
 }

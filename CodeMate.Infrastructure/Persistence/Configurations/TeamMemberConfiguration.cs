@@ -1,18 +1,24 @@
-﻿using CodeMate.Domain.Entities;
+using CodeMate.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CodeMate.Infrastructure.Persistence.Configurations;
 
-public sealed class JoinRequestConfiguration : IEntityTypeConfiguration<JoinRequest>
+public sealed class TeamMemberConfiguration : IEntityTypeConfiguration<TeamMember>
 {
-    public void Configure(EntityTypeBuilder<JoinRequest> builder)
+    public void Configure(EntityTypeBuilder<TeamMember> builder)
     {
-        builder.ToTable("JoinRequests");
+        builder.ToTable("TeamMembers");
 
         builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.Status)
+        builder.Property(x => x.Role)
+            .IsRequired();
+
+        builder.Property(x => x.JoinedAt)
+            .IsRequired();
+
+        builder.Property(x => x.IsActive)
             .IsRequired();
 
         builder.HasOne<Team>()
@@ -28,5 +34,8 @@ public sealed class JoinRequestConfiguration : IEntityTypeConfiguration<JoinRequ
         builder.HasIndex(x => x.TeamId);
 
         builder.HasIndex(x => x.UserId);
+
+        builder.HasIndex(x => new { x.TeamId, x.UserId })
+            .IsUnique();
     }
 }

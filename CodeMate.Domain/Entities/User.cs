@@ -18,5 +18,8 @@ namespace CodeMate.Domain.Entities
         public UserRole Role { get; set; } = UserRole.User;
         public bool IsActive { get; set; } = true;
 
+        public string? PasswordResetToken { get; set; }
+        public DateTimeOffset? PasswordResetTokenExpiresAt { get; set; }
+
     }
 }

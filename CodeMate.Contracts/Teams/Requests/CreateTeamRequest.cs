@@ -1,8 +1,6 @@
-﻿using CodeMate.Domain.Common.Base;
+namespace CodeMate.Contracts.Teams.Requests;
 
-namespace CodeMate.Domain.Entities;
-
-public class Team : BaseEntity
+public class CreateTeamRequest
 {
     public Guid ProjectId { get; set; }
 

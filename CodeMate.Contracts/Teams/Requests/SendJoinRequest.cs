@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace CodeMate.Contracts.Teams.Requests;
 
-namespace CodeMate.Contracts.Teams.Requests
+public class SendJoinRequest
 {
-    internal class SendJoinRequest
-    {
-    }
+    public Guid TeamId { get; set; }
+
+    public string? Message { get; set; }
 }

@@ -31,6 +31,10 @@ public static class DependencyInjection
         services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddScoped<ISkillRepository, SkillRepository>();
 
+        services.AddScoped<ITeamRepository, TeamRepository>();
+        services.AddScoped<IJoinRequestRepository, JoinRequestRepository>();
+        services.AddScoped<IProjectSkillRepository, ProjectSkillRepository>();
+        
         services.Configure<JwtSettings>(
             configuration.GetSection(JwtConstants.SectionName));
 

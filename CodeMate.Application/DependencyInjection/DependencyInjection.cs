@@ -22,6 +22,8 @@ public static class DependencyInjection
         services.AddScoped<ITeamCommandService, TeamCommandService>();
         services.AddScoped<IJoinRequestCommandService, JoinRequestCommandService>();
         services.AddScoped<IProjectSkillCommandService, ProjectSkillCommandService>();
+        services.AddScoped<ITeamQueryService, TeamQueryService>();
+        services.AddScoped<IJoinRequestQueryService, JoinRequestQueryService>();
 
         return services;
     }

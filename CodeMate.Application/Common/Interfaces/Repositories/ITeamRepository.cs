@@ -6,6 +6,10 @@ public interface ITeamRepository
 {
     Task<Team?> GetByIdAsync(Guid id);
 
+    Task<IEnumerable<Team>> GetByProjectIdAsync(Guid projectId);
+
+    Task<IEnumerable<TeamMember>> GetMembersAsync(Guid teamId);
+
     Task<bool> IsMemberAsync(Guid teamId, Guid userId);
 
     Task<TeamMember?> GetMemberAsync(Guid teamId, Guid userId);

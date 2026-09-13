@@ -1,13 +1,17 @@
 using AutoMapper;
-using CodeMate.Contracts.Teams.Requests;
+using CodeMate.Contracts.Teams.Enums;
+using CodeMate.Contracts.Teams.Responses;
 using CodeMate.Domain.Entities;
 
 namespace CodeMate.Application.Mappings;
 
-public sealed class JoinRequestMappingProfile : Profile
+public sealed class JoinRequestQueryMappingProfile : Profile
 {
-    public JoinRequestMappingProfile()
+    public JoinRequestQueryMappingProfile()
     {
-        CreateMap<SendJoinRequest, JoinRequest>();
+        CreateMap<JoinRequest, JoinRequestResponse>()
+            .ForMember(
+                dest => dest.Status,
+                opt => opt.MapFrom(src => (JoinRequestStatusResponse)src.Status));
     }
 }

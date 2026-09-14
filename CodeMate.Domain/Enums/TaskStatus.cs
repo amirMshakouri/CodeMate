@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace CodeMate.Domain.Enums;
 
-namespace CodeMate.Domain.Enums
+public enum TaskStatus
 {
-    public enum TaskStatus
-    {
-    }
+    Todo = 0,
+    Doing = 1,
+    Done = 2
 }

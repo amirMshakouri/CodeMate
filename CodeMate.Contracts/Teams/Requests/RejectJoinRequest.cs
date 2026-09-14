@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace CodeMate.Contracts.Teams.Requests;
 
-namespace CodeMate.Contracts.Teams.Requests
+public class RejectJoinRequest
 {
-    internal class RejectJoinRequest
-    {
-    }
+    public Guid RequestId { get; set; }
 }

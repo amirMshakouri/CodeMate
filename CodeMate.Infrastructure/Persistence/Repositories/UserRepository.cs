@@ -42,6 +42,15 @@ namespace CodeMate.Infrastructure.Persistence.Repositories
                 .FirstOrDefaultAsync(x =>
                     x.UserName == userNameOrEmail ||
                     x.Email == userNameOrEmail);
+
+
+        }
+
+        public async Task<User?> GetByPasswordResetTokenAsync(string token)
+        {
+            return await _context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.PasswordResetToken == token);
         }
 
         public async Task<bool> ExistsByUserNameAsync(string userName)

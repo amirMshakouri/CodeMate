@@ -1,4 +1,5 @@
-﻿using CodeMate.Application.Common.Interfaces.Services;
+﻿
+using CodeMate.Application.Common.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeMate.API.Controllers;
@@ -8,9 +9,14 @@ namespace CodeMate.API.Controllers;
 public partial class TasksController : ControllerBase
 {
     private readonly ITaskQueryService _taskQueryService;
+    private readonly ITaskCommandService _taskCommandService;
 
-    public TasksController(ITaskQueryService taskQueryService)
+    public TasksController(
+        ITaskQueryService taskQueryService,
+        ITaskCommandService taskCommandService)
     {
         _taskQueryService = taskQueryService;
+        _taskCommandService = taskCommandService;
     }
 }
+

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace CodeMate.Contracts.Tasks.Requests;
 
-namespace CodeMate.Contracts.Tasks.Requests
+public sealed class AssignTaskRequest
 {
-    internal class AssignTaskRequest
-    {
-    }
+    public Guid AssignedUserId { get; set; }
 }

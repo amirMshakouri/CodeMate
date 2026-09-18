@@ -35,8 +35,9 @@ public static class DependencyInjection
         services.AddScoped<IJoinRequestRepository, JoinRequestRepository>();
         services.AddScoped<IProjectSkillRepository, ProjectSkillRepository>();
         services.AddScoped<ITaskRepository, TaskRepository>();
+        services.AddScoped<IDashboardRepository, DashboardRepository>();
 
-      
+
         services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         services.AddScoped<

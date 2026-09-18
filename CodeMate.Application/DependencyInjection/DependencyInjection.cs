@@ -29,6 +29,12 @@ public static class DependencyInjection
         services.AddScoped<ITaskQueryService, TaskQueryService>();
         services.AddScoped<ITaskCommandService, TaskCommandService>();
 
+        services.AddScoped<ITaskQueryService, TaskQueryService>();
+        services.AddScoped<ITaskQueryService, TaskQueryService>();
+        services.AddScoped<IAdminUserService, AdminUserService>();
+        services.AddScoped<IAdminSkillService, AdminSkillService>();
+
+
         return services;
     }
 }

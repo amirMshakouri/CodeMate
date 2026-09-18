@@ -1,8 +1,8 @@
-﻿using CodeMate.Contracts.Tasks.Enums;
+using CodeMate.Contracts.Tasks.Enums;
 
 namespace CodeMate.Contracts.Tasks.Responses;
 
-public class TaskDetailsResponse
+public class TaskCardResponse
 {
     public Guid Id { get; set; }
 
@@ -11,8 +11,6 @@ public class TaskDetailsResponse
     public Guid? AssignedUserId { get; set; }
 
     public string Title { get; set; } = string.Empty;
-
-    public string? Description { get; set; }
 
     public TaskStatusResponse Status { get; set; }
 

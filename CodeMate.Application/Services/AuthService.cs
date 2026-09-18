@@ -71,10 +71,14 @@ public sealed class AuthService : IAuthService
     {
         var user = await _userRepository.GetByUserNameOrEmailAsync(request.UserNameOrEmail);
 
-       
         if (user is null || !_passwordHasher.Verify(request.Password, user.PasswordHash))
         {
             throw new UnauthorizedException("Invalid username or password.");
+        }
+
+        if (!user.IsActive)
+        {
+            throw new ForbiddenException("account has been deactivated . ");
         }
 
         var jwt = _jwtService.GenerateToken(user);
@@ -85,6 +89,8 @@ public sealed class AuthService : IAuthService
             Expiration = jwt.Expiration
         };
     }
+
+
 
     public async Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordRequest request)
     {

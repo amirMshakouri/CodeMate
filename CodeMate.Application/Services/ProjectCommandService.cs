@@ -96,8 +96,15 @@ public sealed class ProjectCommandService : IProjectCommandService
 
     private void EnsureOwnership(Project project)
     {
+        if (_currentUserService.Role == UserRole.Admin)
+        {
+            return;
+        }
+
         if (project.OwnerId != _currentUserService.UserId)
+        {
             throw new ForbiddenException(
                 "You do not have permission to modify this project.");
+        }
     }
 }

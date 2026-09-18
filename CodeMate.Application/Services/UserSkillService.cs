@@ -30,27 +30,21 @@ public sealed class UserSkillService : IUserSkillService
     }
 
     public async Task<SkillResponse> AddSkillAsync(
-        Guid userId,
-        AddUserSkillRequest request)
+      Guid userId,
+      AddUserSkillRequest request)
     {
-        var skill = await _skillRepository.GetByNameAsync(request.SkillName);
+        var skill = await _skillRepository.GetByIdAsync(request.SkillId);
 
         if (skill is null)
         {
-            skill = new Skill
-            {
-                Name = request.SkillName
-            };
-
-            await _skillRepository.AddSkillAsync(skill);
-            await _skillRepository.SaveChangesAsync();
+            throw new NotFoundException("Skill not found. Contact an admin to add it.");
         }
 
         if (await _skillRepository.HasUserSkillAsync(userId, skill.Id))
         {
             throw new ValidationException(new Dictionary<string, string[]>
             {
-                ["SkillName"] = new[] { "This skill has already been added." }
+                ["SkillId"] = new[] { "This skill has already been added." }
             });
         }
 
@@ -68,7 +62,6 @@ public sealed class UserSkillService : IUserSkillService
 
         return _mapper.Map<SkillResponse>(userSkill);
     }
-
     public async Task RemoveSkillAsync(
         Guid userId,
         Guid skillId)

@@ -19,5 +19,12 @@ namespace CodeMate.Application.Common.Interfaces.Repositories
         Task<bool> HasUserSkillAsync(Guid userId, Guid skillId);
 
         Task SaveChangesAsync();
+        Task<Skill?> GetByIdAsync(Guid id);
+
+        Task UpdateAsync(Skill skill);
+
+        Task DeleteAsync(Guid id);
+
+
     }
 }

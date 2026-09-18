@@ -1,4 +1,5 @@
 ﻿using CodeMate.Application.Common.Interfaces.Services;
+using CodeMate.Domain.Enums;
 using CodeMate.Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
@@ -34,4 +35,17 @@ public sealed class CurrentUserService : ICurrentUserService
             .User
             .Identity?
             .IsAuthenticated ?? false;
+    public UserRole Role
+    {
+        get
+        {
+            var role = _httpContextAccessor.HttpContext?
+                .User
+                .FindFirstValue(ClaimTypes.Role);
+
+            return Enum.TryParse<UserRole>(role, out var parsedRole)
+                ? parsedRole
+                : UserRole.User;
+        }
+    }
 }

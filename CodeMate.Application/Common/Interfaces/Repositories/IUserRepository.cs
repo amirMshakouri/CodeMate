@@ -1,4 +1,6 @@
 ﻿using CodeMate.Domain.Entities;
+using CodeMate.Domain.Enums;
+using CodeMate.Shared.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,5 +28,13 @@ namespace CodeMate.Application.Common.Interfaces.Repositories
         Task UpdateAsync(User user);
 
         Task SaveChangesAsync();
+
+
+        Task<PaginatedList<User>> SearchAsync(
+            string? searchTerm,
+            UserRole? role,
+            bool? isActive,
+            int pageNumber,
+            int pageSize);
     }
 }

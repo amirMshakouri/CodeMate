@@ -8,9 +8,8 @@ namespace CodeMate.Application.Validators.Skills
     {
         public AddUserSkillValidator()
         {
-            RuleFor(x => x.SkillName)
-                .NotEmpty()
-                .MaximumLength(100);
+            RuleFor(x => x.SkillId)
+                .NotEmpty();
 
             RuleFor(x => x.Level)
                 .Must(level => Enum.IsDefined(typeof(SkillLevel), level))

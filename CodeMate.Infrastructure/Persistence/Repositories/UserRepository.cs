@@ -1,6 +1,8 @@
 ﻿using CodeMate.Application.Common.Interfaces.Repositories;
 using CodeMate.Domain.Entities;
+using CodeMate.Domain.Enums;
 using CodeMate.Infrastructure.Persistence.Context;
+using CodeMate.Shared.Pagination;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeMate.Infrastructure.Persistence.Repositories
@@ -79,6 +81,50 @@ namespace CodeMate.Infrastructure.Persistence.Repositories
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<PaginatedList<User>> SearchAsync(
+    string? searchTerm,
+    UserRole? role,
+    bool? isActive,
+    int pageNumber,
+    int pageSize)
+        {
+            var query = _context.Users
+                .AsNoTracking()
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                query = query.Where(x =>
+                    x.UserName.Contains(searchTerm) ||
+                    x.Email.Contains(searchTerm) ||
+                    (x.FullName != null && x.FullName.Contains(searchTerm)));
+            }
+
+            if (role.HasValue)
+            {
+                query = query.Where(x => x.Role == role.Value);
+            }
+
+            if (isActive.HasValue)
+            {
+                query = query.Where(x => x.IsActive == isActive.Value);
+            }
+
+            var totalCount = await query.CountAsync();
+
+            var items = await query
+                .OrderBy(x => x.UserName)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PaginatedList<User>(
+                items,
+                totalCount,
+                pageNumber,
+                pageSize);
         }
     }
 }

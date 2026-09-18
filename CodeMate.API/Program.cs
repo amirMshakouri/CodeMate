@@ -12,7 +12,7 @@ namespace CodeMate.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
@@ -37,6 +37,18 @@ namespace CodeMate.API
             {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 db.Database.Migrate();
+            }
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                db.Database.Migrate();
+
+                var passwordHasher = scope.ServiceProvider
+                    .GetRequiredService<CodeMate.Application.Common.Interfaces.Security.IPasswordHasher>();
+
+                await CodeMate.Infrastructure.Persistence.Seed.SeedData
+                    .SeedAdminAsync(db, passwordHasher, builder.Configuration);
             }
 
             // Configure the HTTP request pipeline.

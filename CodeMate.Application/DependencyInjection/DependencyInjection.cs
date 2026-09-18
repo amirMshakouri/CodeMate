@@ -26,10 +26,12 @@ public static class DependencyInjection
         services.AddScoped<IJoinRequestQueryService, JoinRequestQueryService>();
         services.AddScoped<IProjectDashboardService, ProjectDashboardService>();
         services.AddScoped<IMyDashboardService, MyDashboardService>();
+
         services.AddScoped<ITaskQueryService, TaskQueryService>();
         services.AddScoped<ITaskQueryService, TaskQueryService>();
         services.AddScoped<IAdminUserService, AdminUserService>();
         services.AddScoped<IAdminSkillService, AdminSkillService>();
+
 
         return services;
     }

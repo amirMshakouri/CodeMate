@@ -46,7 +46,7 @@ public sealed class TeamCommandService : ITeamCommandService
 
         return _mapper.Map<TeamResponse>(team);
     }
-    
+
 
     public async Task<TeamResponse> UpdateAsync(
         Guid teamId,
@@ -95,7 +95,7 @@ public sealed class TeamCommandService : ITeamCommandService
         await _teamRepository.DeleteAsync(team);
         await _teamRepository.SaveChangesAsync();
     }
-    
+
     private void EnsureOwnership(Project project)
     {
         if (project.OwnerId != _currentUserService.UserId)

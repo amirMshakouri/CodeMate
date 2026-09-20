@@ -55,6 +55,20 @@ public sealed class SkillRepository : ISkillRepository
 
     public async Task AddUserSkillAsync(UserSkill userSkill)
     {
+        var existing = await _context.UserSkills.FirstOrDefaultAsync(x =>
+            x.UserId == userSkill.UserId &&
+            x.SkillId == userSkill.SkillId);
+
+        if (existing is not null)
+        {
+            existing.IsDeleted = false;
+            existing.DeletedAt = null;
+            existing.DeletedBy = null;
+            existing.Level = userSkill.Level;
+            existing.YearsOfExperience = userSkill.YearsOfExperience;
+            return;
+        }
+
         await _context.UserSkills.AddAsync(userSkill);
     }
 

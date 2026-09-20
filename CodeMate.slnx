@@ -1,5 +1,11 @@
 <Solution>
-  <Folder Name="/docs/" />
+  <Folder Name="/docs/">
+    <File Path="architecture.md" />
+    <File Path="local-dev-setup.md" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="CONTRIBUTING.md" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="CodeMate.API/CodeMate.API.csproj" Id="0b91b11f-b04f-4522-8ebb-d218955da384" />
     <Project Path="CodeMate.Application/CodeMate.Application.csproj" Id="91040907-96f9-4612-9e86-5779d82cb2d1" />
@@ -9,4 +15,5 @@
     <Project Path="CodeMate.Shared/CodeMate.Shared.csproj" Id="dce79c0d-a04e-4b62-9e7e-f7374f32ce41" />
   </Folder>
   <Folder Name="/tests/" />
+  <Project Path="CodeMate.Frontend/CodeMate.Frontend.csproj" Id="77830917-2f3c-40a1-8c4b-10ec5ead27eb" />
 </Solution>

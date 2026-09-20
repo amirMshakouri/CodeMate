@@ -7,4 +7,5 @@ public class ProjectCardResponse
     public Guid Id { get; set; }
     public string Title { get; set; } = string.Empty;
     public ProjectStatusResponse Status { get; set; }
+    public Guid OwnerId { get; set; }
 }

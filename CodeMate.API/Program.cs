@@ -31,13 +31,7 @@ namespace CodeMate.API
 
             var app = builder.Build();
 
-            // اجرای خودکار Migrationها موقع بالا اومدن برنامه
-            // (نیازی به اجرای دستور Update-Database یا dotnet ef از بیرون نیست)
-            using (var scope = app.Services.CreateScope())
-            {
-                var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                db.Database.Migrate();
-            }
+        
 
             using (var scope = app.Services.CreateScope())
             {

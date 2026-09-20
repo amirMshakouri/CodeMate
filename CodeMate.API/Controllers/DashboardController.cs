@@ -1,11 +1,13 @@
 ﻿using CodeMate.Application.Common.Interfaces.Services;
 using CodeMate.Contracts.Dashboard.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CodeMate.API.Controllers;
 
 [ApiController]
 [Route("api/dashboard")]
+[Authorize]
 public partial class DashboardController : ControllerBase
 {
     private readonly IProjectDashboardService _projectDashboardService;

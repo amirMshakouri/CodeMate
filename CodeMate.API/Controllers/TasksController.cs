@@ -1,11 +1,13 @@
 ﻿
 using CodeMate.Application.Common.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CodeMate.API.Controllers;
 
 [ApiController]
 [Route("api/tasks")]
+[Authorize]
 public partial class TasksController : ControllerBase
 {
     private readonly ITaskQueryService _taskQueryService;

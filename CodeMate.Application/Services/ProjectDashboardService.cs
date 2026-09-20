@@ -15,14 +15,17 @@ public sealed class ProjectDashboardService : IProjectDashboardService
     private readonly IDashboardRepository _dashboardRepository;
     private readonly IProjectRepository _projectRepository;
     private readonly ICurrentUserService _currentUserService;
+    private readonly IUserRepository _userRepository;
 
     public ProjectDashboardService(
         IDashboardRepository dashboardRepository,
         IProjectRepository projectRepository,
+        IUserRepository userRepository,
         ICurrentUserService currentUserService)
     {
         _dashboardRepository = dashboardRepository;
         _projectRepository = projectRepository;
+        _userRepository = userRepository;
         _currentUserService = currentUserService;
     }
 
@@ -33,7 +36,8 @@ public sealed class ProjectDashboardService : IProjectDashboardService
         if (project is null)
             throw new NotFoundException("Project not found.");
 
-        if (project.OwnerId != _currentUserService.UserId)
+        if (project.OwnerId != _currentUserService.UserId &&
+      _currentUserService.Role != CodeMate.Domain.Enums.UserRole.Admin)
             throw new ForbiddenException("You are not the owner of this project.");
 
         var tasks = await _dashboardRepository.GetProjectTasksAsync(projectId);
@@ -41,14 +45,21 @@ public sealed class ProjectDashboardService : IProjectDashboardService
         var total = tasks.Count;
         var done = tasks.Count(t => t.Status == TaskStatusEnum.Done);
 
-        var memberPerformance = tasks
+        var memberPerformance = new List<MemberPerformanceResponse>();
+
+        foreach (var group in tasks
             .Where(t => t.Status == TaskStatusEnum.Done && t.AssignedUserId.HasValue)
-            .GroupBy(t => t.AssignedUserId!.Value)
-            .Select(g => new MemberPerformanceResponse
+            .GroupBy(t => t.AssignedUserId!.Value))
+        {
+            var user = await _userRepository.GetByIdAsync(group.Key);
+
+            memberPerformance.Add(new MemberPerformanceResponse
             {
-                UserId = g.Key,
-                CompletedTasksCount = g.Count()
+                UserId = group.Key,
+                UserName = user?.UserName ?? string.Empty,
+                CompletedTasksCount = group.Count()
             });
+        }
 
         return new ProjectDashboardResponse
         {

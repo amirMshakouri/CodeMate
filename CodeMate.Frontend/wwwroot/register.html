@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ثبت‌نام — CodeMate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+    <div class="auth-shell">
+        <div class="auth-brand">
+            <div class="wordmark">Code<span>Mate</span></div>
+            <div>
+                <h1>مهارت‌هات رو به پروژه‌ی مناسبش وصل کن.</h1>
+                <p class="lede">پروفایلت رو یک‌بار بساز — تیم و تسک بر همون اساس شکل می‌گیره.</p>
+                <svg class="node-graphic" viewBox="0 0 360 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <line x1="60" y1="60" x2="180" y2="110" stroke="#33363d" stroke-width="1.5" />
+                    <line x1="180" y1="110" x2="300" y2="60" stroke="#33363d" stroke-width="1.5" />
+                    <line x1="180" y1="110" x2="180" y2="30" stroke="#33363d" stroke-width="1.5" />
+                    <line x1="60" y1="60" x2="60" y2="150" stroke="#33363d" stroke-width="1.5" />
+                    <circle cx="60" cy="60" r="6" fill="#5b57d6" />
+                    <circle cx="180" cy="110" r="7" fill="#2f8f6b" />
+                    <circle cx="300" cy="60" r="6" fill="#5b57d6" />
+                    <circle cx="180" cy="30" r="5" fill="#3a3d44" />
+                    <circle cx="60" cy="150" r="5" fill="#3a3d44" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="auth-form-side">
+            <div class="auth-form-wrap" style="max-width:420px;">
+                <h2>ساخت حساب</h2>
+                <p class="subhead">حدود یک دقیقه طول می‌کشه.</p>
+
+                <div id="banner" class="banner banner-error"></div>
+
+                <form id="register-form" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label" for="userName">نام کاربری</label>
+                        <input type="text" class="form-control" id="userName" autocomplete="username" required>
+                        <div class="field-error" data-for="userName"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="email">ایمیل</label>
+                        <input type="email" class="form-control" id="email" autocomplete="email" required>
+                        <div class="field-error" data-for="email"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="password">رمز عبور</label>
+                            <input type="password" class="form-control" id="password" autocomplete="new-password" required>
+                            <div class="field-error" data-for="password"></div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="confirmPassword">تکرار رمز عبور</label>
+                            <input type="password" class="form-control" id="confirmPassword" autocomplete="new-password" required>
+                            <div class="field-error" data-for="confirmPassword"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="fullName">نام کامل <span style="font-weight:400; color:var(--muted);">(اختیاری)</span></label>
+                        <input type="text" class="form-control" id="fullName" autocomplete="name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="phoneNumber">شماره تماس <span style="font-weight:400; color:var(--muted);">(اختیاری)</span></label>
+                        <input type="tel" class="form-control" id="phoneNumber" autocomplete="tel">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="bio">بیوگرافی کوتاه <span style="font-weight:400; color:var(--muted);">(اختیاری)</span></label>
+                        <textarea class="form-control" id="bio" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-brand w-100" id="submit-btn">ساخت حساب</button>
+                </form>
+
+                <p class="mt-4 text-center" style="font-size:0.9rem; color:var(--muted);">
+                    حساب داری؟ <a href="login.html">وارد شو</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/form-helpers.js"></script>
+    <script src="assets/js/register.js"></script>
+</body>
+</html>

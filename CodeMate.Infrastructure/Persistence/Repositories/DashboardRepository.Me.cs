@@ -19,14 +19,19 @@ public partial class DashboardRepository
 
     public async Task<List<Guid>> GetMyProjectIdsAsync(Guid userId)
     {
-        return await _context.TeamMembers
+        var memberProjectIds = _context.TeamMembers
             .AsNoTracking()
             .Where(tm => tm.UserId == userId && tm.IsActive && !tm.IsDeleted)
             .Join(_context.Teams.Where(t => !t.IsDeleted),
                 tm => tm.TeamId,
                 t => t.Id,
-                (tm, t) => t.ProjectId)
-            .Distinct()
-            .ToListAsync();
+                (tm, t) => t.ProjectId);
+
+        var ownedProjectIds = _context.Projects
+            .AsNoTracking()
+            .Where(p => p.OwnerId == userId && !p.IsDeleted)
+            .Select(p => p.Id);
+
+        return await memberProjectIds.Union(ownedProjectIds).ToListAsync();
     }
 }

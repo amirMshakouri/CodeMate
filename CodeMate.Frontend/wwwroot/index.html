@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8" />
+    <title>CodeMate</title>
+</head>
+<body>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script>
+  window.location.href = CodeMateApi.isAuthenticated() ? "dashboard.html" : "login.html";
+    </script>
+</body>
+</html>

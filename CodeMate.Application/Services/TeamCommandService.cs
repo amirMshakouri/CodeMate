@@ -4,7 +4,6 @@ using CodeMate.Application.Common.Interfaces.Services;
 using CodeMate.Contracts.Teams.Requests;
 using CodeMate.Contracts.Teams.Responses;
 using CodeMate.Domain.Entities;
-using CodeMate.Domain.Enums;
 using CodeMate.Shared.Exceptions;
 
 namespace CodeMate.Application.Services;
@@ -37,7 +36,6 @@ public sealed class TeamCommandService : ITeamCommandService
             throw new NotFoundException("Project not found.");
 
         EnsureOwnership(project);
-        EnsureProjectNotCompleted(project);
 
         var team = _mapper.Map<Team>(request);
 
@@ -46,7 +44,7 @@ public sealed class TeamCommandService : ITeamCommandService
 
         return _mapper.Map<TeamResponse>(team);
     }
-    
+
 
     public async Task<TeamResponse> UpdateAsync(
         Guid teamId,
@@ -63,7 +61,6 @@ public sealed class TeamCommandService : ITeamCommandService
             throw new NotFoundException("Project not found.");
 
         EnsureOwnership(project);
-        EnsureProjectNotCompleted(project);
 
         _mapper.Map(request, team);
 
@@ -86,7 +83,6 @@ public sealed class TeamCommandService : ITeamCommandService
             throw new NotFoundException("Project not found.");
 
         EnsureOwnership(project);
-        EnsureProjectNotCompleted(project);
 
         team.IsDeleted = true;
         team.DeletedAt = DateTimeOffset.UtcNow;
@@ -95,17 +91,11 @@ public sealed class TeamCommandService : ITeamCommandService
         await _teamRepository.DeleteAsync(team);
         await _teamRepository.SaveChangesAsync();
     }
-    
+
     private void EnsureOwnership(Project project)
     {
         if (project.OwnerId != _currentUserService.UserId)
             throw new ForbiddenException(
                 "You do not have permission to modify this project.");
-    }
-    private static void EnsureProjectNotCompleted(Project project)
-    {
-        if (project.Status == ProjectStatus.Completed)
-            throw new ForbiddenException(
-                "This project is completed and its tasks can no longer be changed.");
     }
 }

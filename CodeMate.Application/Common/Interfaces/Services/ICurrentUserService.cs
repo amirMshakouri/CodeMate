@@ -1,8 +1,12 @@
-﻿namespace CodeMate.Application.Common.Interfaces.Services;
+﻿using CodeMate.Domain.Enums;
+
+namespace CodeMate.Application.Common.Interfaces.Services;
 
 public interface ICurrentUserService
 {
     Guid UserId { get; }
 
     bool IsAuthenticated { get; }
+
+    UserRole Role { get; }
 }

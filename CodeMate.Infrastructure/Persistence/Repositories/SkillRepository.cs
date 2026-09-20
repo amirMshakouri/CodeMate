@@ -87,4 +87,30 @@ public sealed class SkillRepository : ISkillRepository
     {
         await _context.SaveChangesAsync();
     }
+
+    public async Task<Skill?> GetByIdAsync(Guid id)
+    {
+        return await _context.Skills
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+    }
+
+    public Task UpdateAsync(Skill skill)
+    {
+        _context.Skills.Update(skill);
+
+        return Task.CompletedTask;
+    }
+
+    public async Task DeleteAsync(Guid id)
+    {
+        var skill = await _context.Skills
+            .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+
+        if (skill is not null)
+        {
+            skill.IsDeleted = true;
+            skill.DeletedAt = DateTimeOffset.UtcNow;
+        }
+    }
 }

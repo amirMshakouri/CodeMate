@@ -1,10 +1,8 @@
-﻿
-
-namespace CodeMate.Contracts.Skills.Requests
+﻿namespace CodeMate.Contracts.Skills.Requests
 {
     public sealed class AddUserSkillRequest
     {
-        public required string SkillName { get; set; }
+        public required Guid SkillId { get; set; }
 
         public int Level { get; set; }
 

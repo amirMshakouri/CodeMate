@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CodeMate.Contracts.Tasks.Enums;
 
-namespace CodeMate.Contracts.Tasks.Requests
+namespace CodeMate.Contracts.Tasks.Requests;
+
+public sealed class ChangeTaskStatusRequest
 {
-    internal class ChangeTaskStatusRequest
-    {
-    }
+    public TaskStatusResponse Status { get; set; }
 }

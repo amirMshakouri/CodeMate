@@ -27,14 +27,28 @@ public static class DependencyInjection
             options.UseSqlServer(
                 configuration.GetConnectionString("DefaultConnection")));
 
+       
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddScoped<ISkillRepository, SkillRepository>();
-
         services.AddScoped<ITeamRepository, TeamRepository>();
         services.AddScoped<IJoinRequestRepository, JoinRequestRepository>();
         services.AddScoped<IProjectSkillRepository, ProjectSkillRepository>();
-        
+        services.AddScoped<ITaskRepository, TaskRepository>();
+        services.AddScoped<IDashboardRepository, DashboardRepository>();
+
+
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+        services.AddScoped<
+            IProjectMembershipChecker,
+            CodeMate.Infrastructure.Services.ProjectMembershipChecker>();
+
+        services.AddScoped<
+            IEmailService,
+            CodeMate.Infrastructure.Services.EmailService>();
+
+       
         services.Configure<JwtSettings>(
             configuration.GetSection(JwtConstants.SectionName));
 
@@ -43,10 +57,10 @@ public static class DependencyInjection
 
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IJwtService, JwtService>();
+
+        
         services.AddHttpContextAccessor();
 
-        services.AddScoped<ICurrentUserService, CurrentUserService>();
-        services.AddScoped<IEmailService, CodeMate.Infrastructure.Services.EmailService>();
         return services;
     }
 }

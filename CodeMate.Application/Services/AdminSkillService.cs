@@ -48,6 +48,16 @@ public sealed class AdminSkillService : IAdminSkillService
             throw new NotFoundException("Skill not found.");
         }
 
+        var duplicate = await _skillRepository.GetByNameAsync(request.Name);
+
+        if (duplicate is not null && duplicate.Id != skillId)
+        {
+            throw new ValidationException(new Dictionary<string, string[]>
+            {
+                ["Name"] = new[] { "A skill with this name already exists." }
+            });
+        }
+
         skill.Name = request.Name;
 
         await _skillRepository.UpdateAsync(skill);

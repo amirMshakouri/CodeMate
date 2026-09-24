@@ -53,14 +53,13 @@ public sealed class UserSkillService : IUserSkillService
             UserId = userId,
             SkillId = skill.Id,
             Level = (SkillLevel)request.Level,
-            YearsOfExperience = request.YearsOfExperience,
-            Skill = skill
+            YearsOfExperience = request.YearsOfExperience
         };
 
         await _skillRepository.AddUserSkillAsync(userSkill);
         await _skillRepository.SaveChangesAsync();
 
-        return _mapper.Map<SkillResponse>(userSkill);
+        return _mapper.Map<SkillResponse>(skill);
     }
     public async Task RemoveSkillAsync(
         Guid userId,

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using CodeMate.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using CodeMate.Domain.Common.Base;
 
 namespace CodeMate.Infrastructure.Persistence.Context
 {
@@ -33,6 +34,24 @@ namespace CodeMate.Infrastructure.Persistence.Context
             
             modelBuilder.ApplyConfigurationsFromAssembly(
                 typeof(ApplicationDbContext).Assembly);
+        }
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var now = DateTimeOffset.UtcNow;
+
+            foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+            {
+                if (entry.State == EntityState.Added && entry.Entity.CreatedAt == default)
+                {
+                    entry.Entity.CreatedAt = now;
+                }
+                else if (entry.State == EntityState.Modified)
+                {
+                    entry.Entity.UpdatedAt = now;
+                }
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

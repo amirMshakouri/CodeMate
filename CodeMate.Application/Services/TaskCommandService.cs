@@ -1,5 +1,4 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using CodeMate.Application.Common.Interfaces.Repositories;
 using CodeMate.Application.Common.Interfaces.Services;
 using CodeMate.Contracts.Tasks.Enums;
@@ -40,6 +39,7 @@ public sealed class TaskCommandService : ITaskCommandService
         var project = await GetProjectAsync(request.ProjectId);
 
         EnsureOwnership(project);
+        EnsureProjectNotCompleted(project);
 
         var task = _mapper.Map<TaskItem>(request);
 
@@ -60,6 +60,7 @@ public sealed class TaskCommandService : ITaskCommandService
         var project = await GetProjectAsync(task.ProjectId);
 
         EnsureOwnership(project);
+        EnsureProjectNotCompleted(project);
 
         _mapper.Map(request, task);
 
@@ -76,6 +77,7 @@ public sealed class TaskCommandService : ITaskCommandService
         var project = await GetProjectAsync(task.ProjectId);
 
         EnsureOwnership(project);
+        EnsureProjectNotCompleted(project);
 
         task.IsDeleted = true;
         task.DeletedAt = DateTimeOffset.UtcNow;
@@ -94,6 +96,7 @@ public sealed class TaskCommandService : ITaskCommandService
         var project = await GetProjectAsync(task.ProjectId);
 
         EnsureOwnership(project);
+        EnsureProjectNotCompleted(project);
 
         var isMember = await _membershipChecker.IsProjectMemberAsync(
             task.ProjectId,
@@ -120,6 +123,7 @@ public sealed class TaskCommandService : ITaskCommandService
         var project = await GetProjectAsync(task.ProjectId);
 
         EnsureStatusPermission(task, project);
+        EnsureProjectNotCompleted(project);
 
         var newStatus = MapStatus(request.Status);
 
@@ -160,6 +164,13 @@ public sealed class TaskCommandService : ITaskCommandService
         if (project.OwnerId != _currentUserService.UserId)
             throw new ForbiddenException(
                 "You do not have permission to modify this task.");
+    }
+
+    private static void EnsureProjectNotCompleted(Project project)
+    {
+        if (project.Status == ProjectStatus.Completed)
+            throw new ForbiddenException(
+                "This project is completed and its tasks can no longer be changed.");
     }
 
     private void EnsureStatusPermission(

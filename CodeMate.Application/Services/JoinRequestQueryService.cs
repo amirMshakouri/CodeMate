@@ -2,6 +2,7 @@
 using CodeMate.Application.Common.Interfaces.Repositories;
 using CodeMate.Application.Common.Interfaces.Services;
 using CodeMate.Contracts.Teams.Responses;
+using CodeMate.Domain.Entities;
 using CodeMate.Shared.Exceptions;
 
 namespace CodeMate.Application.Services;
@@ -13,17 +14,20 @@ public sealed class JoinRequestQueryService : IJoinRequestQueryService
     private readonly IProjectRepository _projectRepository;
     private readonly ICurrentUserService _currentUserService;
     private readonly IMapper _mapper;
+    private readonly IUserRepository _userRepository;
 
     public JoinRequestQueryService(
         IJoinRequestRepository joinRequestRepository,
         ITeamRepository teamRepository,
         IProjectRepository projectRepository,
+        IUserRepository userRepository,
         ICurrentUserService currentUserService,
         IMapper mapper)
     {
         _joinRequestRepository = joinRequestRepository;
         _teamRepository = teamRepository;
         _projectRepository = projectRepository;
+        _userRepository = userRepository;
         _currentUserService = currentUserService;
         _mapper = mapper;
     }
@@ -48,8 +52,9 @@ public sealed class JoinRequestQueryService : IJoinRequestQueryService
         var requests =
             await _joinRequestRepository.GetPendingRequestsForTeamAsync(teamId);
 
-        return _mapper.Map<IEnumerable<JoinRequestResponse>>(requests);
+        return await ToResponsesAsync(requests);
     }
+   
 
     public async Task<IEnumerable<JoinRequestResponse>>
         GetMyJoinRequestsAsync()
@@ -58,6 +63,33 @@ public sealed class JoinRequestQueryService : IJoinRequestQueryService
             await _joinRequestRepository.GetMyJoinRequestsAsync(
                 _currentUserService.UserId);
 
-        return _mapper.Map<IEnumerable<JoinRequestResponse>>(requests);
+        return await ToResponsesAsync(requests);
+
+    }
+
+    private async Task<List<JoinRequestResponse>> ToResponsesAsync(
+   IEnumerable<JoinRequest> requests)
+    {
+        var responses = new List<JoinRequestResponse>();
+
+        foreach (var request in requests)
+        {
+            var response = _mapper.Map<JoinRequestResponse>(request);
+
+            var user = await _userRepository.GetByIdAsync(request.UserId);
+            var team = await _teamRepository.GetByIdAsync(request.TeamId);
+            var project = team is null
+                ? null
+                : await _projectRepository.GetByIdAsync(team.ProjectId);
+
+            response.UserName = user?.UserName ?? string.Empty;
+            response.TeamName = team?.Name ?? string.Empty;
+            response.ProjectId = project?.Id ?? Guid.Empty;
+            response.ProjectTitle = project?.Title ?? string.Empty;
+
+            responses.Add(response);
+        }
+
+        return responses;
     }
 }

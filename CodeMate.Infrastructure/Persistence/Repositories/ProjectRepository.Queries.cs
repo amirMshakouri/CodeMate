@@ -30,7 +30,8 @@ public partial class ProjectRepository
         var totalCount = await query.CountAsync();
 
         var items = await query
-            .OrderBy(x => x.Id)
+           .OrderByDescending(x => x.CreatedAt)
+.ThenBy(x => x.Id)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();

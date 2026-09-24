@@ -49,11 +49,29 @@ public sealed class JoinRequestCommandService : IJoinRequestCommandService
                 ["TeamId"] = new[] { "You are already a member of this team." }
             });
         }
-        
+        var myRequests = await _joinRequestRepository
+    .GetMyJoinRequestsAsync(_currentUserService.UserId);
+
+        if (myRequests.Any(x =>
+                x.TeamId == request.TeamId &&
+                x.Status == JoinRequestStatus.Pending))
+        {
+            throw new ValidationException(new Dictionary<string, string[]>
+            {
+                ["TeamId"] = new[] { "You already have a pending request for this team." }
+            });
+        }
         var project = await _projectRepository.GetByIdAsync(team.ProjectId);
 
         if (project is null)
             throw new NotFoundException("Project not found.");
+        if (project.Status != ProjectStatus.Active)
+        {
+            throw new ValidationException(new Dictionary<string, string[]>
+            {
+                ["ProjectId"] = new[] { "This project is not accepting join requests." }
+            });
+        }
 
         var projectSkills = await _projectSkillRepository
             .GetByProjectIdAsync(team.ProjectId);
